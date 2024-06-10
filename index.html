@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>See ‘N’ Say Storymaker</title>
+    <!-- linking css files  -->
+    <link href="css/normalize.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <!-- Heading of the webpage -->
+        <h1>See'N Say Story Maker</h1> 
+    </header>
+    <main>
+        <section>
+            <div id="content">
+                <!-- Category for Nouns -->
+                <div class="category">
+                    <!-- Sub heading -->
+                    <h2>Nouns</h2>
+                    <!-- Image container -->
+                    <div class="images">
+                        <img src="./images/turkeynew.webp" height="50" width="50" alt="Turkey"/>
+                        <img src="./images/momnew.jpg" height="50" width="50" alt="Mom"/>
+                        <img src="./images/dadnew.webp" height="50" width="50" alt="Dad"/>
+                        <img src="./images/dognew.jpg" height="50" width="50" alt="Dog"/>
+                        <img src="./images/teachernew.jpg" height="50" width="50" alt="Teacher"/>
+                    </div>
+                    <!-- Button to generate a random noun -->
+                    <button onclick="randomMsg(1);"><img src="./images/button.png" alt="Generate Noun"/></button>
+                </div>
+                
+                <!-- Category for Verbs -->
+                <div class="category2">
+                    <h2>Verbs</h2>
+                    <div class="images">
+                        <img src="./images/sat-on-new.jpg" height="50" width="50" alt="Sat on"/>
+                        <img src="./images/atenew.jpg" height="50" width="50" alt="Ate"/>
+                        <img src="./images/danced-withnew.jpg" height="50" width="50" alt="Danced with"/>
+                        <img src="./images/saw new.jpg" height="50" width="50" alt="Saw"/>
+                        <img src="./images/doent like new.png" height="50" width="50" alt="Does not like"/>
+                    </div>
+                    <button onclick="randomMsg(2);"><img src="./images/button2.png" alt="Generate Verb"/></button>
+                </div>
+                
+                <!-- Category for Adjectives -->
+                <div class="category3">
+                    <h2>Adjectives</h2>
+                    <div class="images">
+                        <img src="./images/a-funny new.jpg" height="50" width="50" alt="Funny"/>
+                        <img src="./images/ghostnew.webp" height="50" width="50" alt="Scary"/>
+                        <img src="./images/a goofy new.png" height="50" width="50" alt="Goofy"/>
+                        <img src="./images/a slimy new.jpg" height="50" width="50" alt="Slimy"/>
+                        <img src="./images/a barking new.png" height="50" width="50" alt="Barking"/>
+                    </div>
+                    <button onclick="randomMsg(3);"><img src="./images/button3.png" alt="Generate Adjective"/></button>
+                </div>
+                
+                <!-- Category for Other-Nouns -->
+                <div class="category4">
+                    <h2>Other-Nouns</h2>
+                    <div class="images">
+                        <img src="./images/goatnew.jpg" height="50" width="50" alt="Goat"/>
+                        <img src="./images/monkeynew.jpg" height="50" width="50" alt="Monkey"/>
+                        <img src="./images/fishnew.jpg" height="50" width="50" alt="Fish"/>
+                        <img src="./images/cownew.jpg" height="50" width="50" alt="Cow"/>
+                        <img src="./images/frognew.jpg" height="50" width="50" alt="Frog"/>
+                    </div>
+                    <button onclick="randomMsg(4);"><img src="./images/button4.png" alt="Generate Other Noun"/></button>
+                </div>
+                
+                <!-- Category for Place -->
+                <div class="category5">
+                    <h2>Places</h2>
+                    <div class="images">
+                        <img src="./images/on the moon new.jpg" height="50" width="50" alt="On the moon"/>
+                        <img src="./images/on the chair new.jpg" height="50" width="50" alt="On the chair"/>
+                        <img src="./images/on the spaghetti new.jpg" height="50" width="50" alt="On the spaghetti"/>
+                        <img src="./images/in my soup new.png" height="50" width="50" alt="In my soup"/>
+                        <img src="./images/on the grass new.jpg" height="50" width="50" alt="On the grass"/>
+                    </div>
+                    <button onclick="randomMsg(5);"><img src="./images/button5.png" alt="Generate Place"/></button>
+                </div>
+            </div>
+        </section>
+        <!-- End of Categories -->
+        <div class="extras">
+            <!-- Extras -->
+            <section>
+                <div class="Column6">
+                    <!-- Button to playback the whole story -->
+                    <button onclick="playBack();"><img src="./images/button.png" alt="Play Back"/></button>	
+                    <button onclick="playBack();">Play Back</button>
+                </div>
+                <div class="Column7">
+                    <!-- Button to generate a random story -->
+                    <button onclick="randomMsg(6);"><img src="./images/button2.png" alt="Surprise"/></button>	
+                    <button onclick="randomMsg(6);">Surprise</button>
+                </div>
+                <div class="Column8">
+                    <!-- Button to reset the whole story -->
+                    <button onclick="playback = [];"><img src="./images/button3.png" alt="Reset"/></button>
+                    <button onclick="playback = [];">Reset</button>
+                </div>
+        </div>
+    </main>
+    <script>
+        // Words to be pronounced by the speech synthesis
+        var synth = window.speechSynthesis;
+        var Nounarray = ['the turkey', 'mom', 'dad', 'the dog', 'my teacher'];
+        var Verbarray = ['sat on', 'ate', 'danced with', 'saw', 'does not like'];
+        var Adjectivearray = ['a funny', 'a scary', 'a goofy', 'a slimy', 'a barking'];
+        var Noun2array = ['goat', 'monkey', 'fish', 'cow', 'frog'];
+        var Placearray = ['on the moon', 'on the chair', 'in my spaghetti', 'in my soup', 'on the grass'];
+
+        var playback = [];
+
+        // Function to generate random message and add to playback
+        function randomMsg(speak) {
+            var rand = Math.floor(Math.random() * 5);
+            var text;
+
+            switch (speak) {
+                case 1:
+                    text = Nounarray[rand];
+                    break;
+                case 2:
+                    text = Verbarray[rand];
+                    break;
+                case 3:
+                    text = Adjectivearray[rand];
+                    break;
+                case 4:
+                    text = Noun2array[rand];
+                    break;
+                case 5:
+                    text = Placearray[rand];
+                    break;
+                default:
+                    text = `${Nounarray[rand]} ${Verbarray[rand]} ${Adjectivearray[rand]} ${Noun2array[rand]} ${Placearray[rand]}`;
+                    break;
+            }
+
+            playback.push(text);
+            var utterThis = new SpeechSynthesisUtterance(text);
+            synth.speak(utterThis);
+        }
+
+        // Function to playback the whole story
+        function playBack() {
+            playback.forEach(function(text) {
+                var utterThis = new SpeechSynthesisUtterance(text);
+                synth.speak(utterThis);
+            });
+        }
+    </script>
+</body>
+</html>
